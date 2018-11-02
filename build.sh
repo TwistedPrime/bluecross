@@ -12,11 +12,12 @@ clear
 THREAD="-j$(grep -c ^processor /proc/cpuinfo)"
 KERNEL="Image"
 DTBIMAGE="dtb"
-export CLANG_PATH=~/android/clang/clang-r328903/bin/
+export CLANG_PATH=~/android/clang/clang-r344140/bin/
 export PATH=${CLANG_PATH}:${PATH}
 export CLANG_TRIPLE=aarch64-linux-gnu-
 export CROSS_COMPILE=${HOME}/android/aarch64-linux-android-4.9/bin/aarch64-linux-android-
 export CROSS_COMPILE_ARM32=${HOME}/android/arm-linux-androideabi-4.9/bin/arm-linux-androideabi-
+export LD_LIBRARY_PATH=${HOME}/android/clang/clang-r344140/lib64:$LD_LIBRARY_PATH
 DEFCONFIG="b1c1_defconfig"
 
 # Kernel Details
@@ -28,7 +29,7 @@ REPACK_DIR="${HOME}/android/AK-OnePone-AnyKernel2"
 PATCH_DIR="${HOME}/android/AK-OnePone-AnyKernel2/patch"
 MODULES_DIR="${HOME}/android/AK-OnePone-AnyKernel2/modules"
 ZIP_MOVE="${HOME}/android/AK-releases"
-ZIMAGE_DIR="${HOME}/android/bluecross/arch/arm64/boot/"
+ZIMAGE_DIR="${HOME}/android/bluecross/out/arch/arm64/boot/"
 
 # Functions
 function clean_all {
@@ -44,8 +45,8 @@ function clean_all {
 
 function make_kernel {
 		echo
-		make CC=clang $DEFCONFIG
-		make CC=clang -j10
+		make CC=clang O=out $DEFCONFIG
+		make CC=clang O=out -j10
 
 }
 
